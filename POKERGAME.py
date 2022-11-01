@@ -1,1 +1,2 @@
-print("Hellow Word")
+print("Hellow Wo")
+print("됐나?")
