@@ -20,6 +20,7 @@
 
 **블러핑(Bluffing)** : 자신의 패가 좋지 않으면서도 *패가 좋을 것처럼 베팅을 자꾸 올리거나 계속해서 콜을 받아서 따라가는 전략*.
 
+![포커족보](https://github.com/1617jangheyungjun/poker-game/issues/1#issue-1432550048)
 제가 사용할 규칙은 **텍사스 홀덤** 규칙입니다.
 텍사스 홀덤의 규칙은 [여기](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=fepjstx32270&logNo=195602722)를 참조해 주세요.
 현재 까지는 배팅의 초반까지 구현 됐으며 게임방법은 제 [블로그 프로필](https://blog.naver.com/game_habbit_program)에 올라갈 예정입니다. 참고해 주세요.
