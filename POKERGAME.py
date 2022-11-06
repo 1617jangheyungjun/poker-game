@@ -48,10 +48,12 @@ def betting1(player_count, player_index):
     for i in range(2):
         print(f"{player_index+1}번째 플레이어는 베팅금액을 결정해주십시오. 현재 가진돈 {cash[player_index][0]}")
         for indexer in range(player_count):
-            print(f"{i + 1}번째 플레이어의 돈 {cash[indexer][0]} | 배팅금액 : {betting_cash[indexer][0]}")
+            print(f"{indexer + 1}번째 플레이어의 돈 {cash[indexer][0]} | 배팅금액 : {betting_cash[indexer][0]}")
         m_cash = int(input("배팅할 금액 : "))
         betting_cash[i][0] = betting_cash[i][0]+m_cash
         for p_bet in range(1, player_count):
+            if betting_cash[p_bet][0] == 'Fold':
+                continue
             play_bet = input(f"""{p_bet + 1}번째 플레이어님 콜하시겠습니까? 레이즈하시겠습니까? 폴드하겠습니까?
                 
 콜 = call 레이즈 = raise 폴드 = fold
