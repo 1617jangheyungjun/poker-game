@@ -17,6 +17,25 @@ for i in card_type:
     for z in ("Q", "K", "J"):
         card_list.append("{0} {1}".format(i, z))
 
+def raise1(m_cash, b_raise, player_count):
+    for bet in range(player_count):
+        betting_cash[bet][0] = 0
+    for p_bet in range(player_count):
+        play_bet = input(f"""{p_bet + 1}번째 플레이어님 콜하시겠습니까? 레이즈하시겠습니까? 폴드하겠습니까?
+                
+콜 = call 레이즈 = raise 폴드 = fold
+영어로 작성해 주십시오 : """)
+        if play_bet == "call":
+            betting_cash[p_bet][0] = betting_cash[p_bet][0]+m_cash
+        elif play_bet == 'fold':
+            fold_player.append(betting_cash[p_bet][0])
+            betting_cash[p_bet][0] = "Fold"
+            fold_player_index.append(p_bet)
+        elif play_bet == "raise":
+            b_raise = int(input(f"얼마를 추가로 베팅하시겠습니까? | 현재 배팅금액 {betting_cash[0][0]} + "))
+            m_cash = m_cash + b_raise
+            raise1(m_cash, b_raise, player_count)
+        
     
  
 def Dealing(player_count):
@@ -26,7 +45,7 @@ def Dealing(player_count):
         p_c.append([card_list[i], card_list[i+player_count]])
         
 def betting1(player_count, player_index):
-    for i in range(1):
+    for i in range(2):
         print(f"{player_index+1}번째 플레이어는 베팅금액을 결정해주십시오. 현재 가진돈 {cash[player_index][0]}")
         for indexer in range(player_count):
             print(f"{i + 1}번째 플레이어의 돈 {cash[indexer][0]} | 배팅금액 : {betting_cash[indexer][0]}")
@@ -44,9 +63,9 @@ def betting1(player_count, player_index):
                 betting_cash[p_bet][0] = "Fold"
                 fold_player_index.append(p_bet)
             elif play_bet == "raise":
-                b_raise = int(input("얼마를 추가로 베팅하시겠습니까?")) 
-            
-    
+                b_raise = int(input(f"얼마를 추가로 베팅하시겠습니까? | 현재 배팅금액 {betting_cash[0][0]} + "))
+                m_cash = m_cash + b_raise
+                raise1(m_cash, b_raise, player_count)
         if player_index == player_count:
             continue
         player_index += 1
