@@ -19,11 +19,17 @@ for i in card_type:
 
 def raise1(m_cash, b_raise, player_count):
     for bet in range(player_count):
+        if betting_cash[bet][0] == 'Fold':
+                continue
         betting_cash[bet][0] = 0
     for p_bet in range(player_count):
         if betting_cash[p_bet][0] == 'Fold':
+                print(f"""{p_bet+1}번째 플레이어는 Fold이기때문에 배팅에 참가할 수 없습니다.
+""")
+                time.sleep(0.5)
                 continue
-        play_bet = input(f"""{p_bet + 1}번째 플레이어님 콜하시겠습니까? 레이즈하시겠습니까? 폴드하겠습니까?
+        play_bet = input(f"""
+{p_bet + 1}번째 플레이어님 콜하시겠습니까? 레이즈하시겠습니까? 폴드하겠습니까?
                 
 콜 = call 레이즈 = raise 폴드 = fold
 영어로 작성해 주십시오 : """)
