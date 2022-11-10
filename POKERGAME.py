@@ -43,12 +43,14 @@ def raise1(m_cash, b_raise, player_count,indexe):
         elif play_bet == "raise":
             b_raise = int(input(f"얼마를 추가로 베팅하시겠습니까? | 현재 배팅금액 {betting_cash[0][0]} + "))
             m_cash = m_cash + b_raise
+            betting_cash[p_bet][0] = betting_cash[indexe][0]+m_cash
             while betting_cash[p_bet][0] > cash[p_bet][0]:
-                print(f'{p_bet+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요.')
+                print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요. 현재 배팅 가능한 액수 {10000 - betting_cash[indexe][0]}원')
                 betting_cash[p_bet][0] = betting_cash[p_bet][0]-m_cash
                 m_cash = int(input("추가배팅할 금액 : "))
                 betting_cash[p_bet][0] = betting_cash[indexe][0]+m_cash
             raise1(m_cash, b_raise, player_count)
+            break
         else:
                 print("오타가 있는거 같습니다. 다시한번 확인해주세요.")
                 if betting_cash[p_bet][0] == 'Fold':
@@ -68,12 +70,14 @@ def raise1(m_cash, b_raise, player_count,indexe):
                 elif play_bet == "raise":
                     b_raise = int(input(f"얼마를 추가로 베팅하시겠습니까? | 현재 배팅금액 {betting_cash[0][0]} + "))
                     m_cash = m_cash + b_raise
+                    betting_cash[p_bet][0] = betting_cash[indexe][0]+m_cash
                     while betting_cash[p_bet][0] > cash[p_bet][0]:
-                        print(f'{p_bet+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요.')
+                        print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요. 현재 배팅 가능한 액수 {10000 - betting_cash[indexe][0]}원')
                         betting_cash[p_bet][0] = betting_cash[p_bet][0]-m_cash
                         m_cash = int(input("추가배팅할 금액 : "))
                         betting_cash[p_bet][0] = betting_cash[p_bet][0]+m_cash
                     raise1(m_cash, b_raise, player_count)
+                    break
         
     
  
@@ -112,12 +116,14 @@ def betting1(player_count, player_index, indexe):
             elif play_bet == "raise":
                 b_raise = int(input(f"얼마를 추가로 베팅하시겠습니까? | 현재 배팅금액 {betting_cash[0][0]} + "))
                 m_cash = m_cash + b_raise
+                betting_cash[p_bet][0] = betting_cash[indexe][0]+m_cash
                 while betting_cash[p_bet][0] > cash[p_bet][0]:
-                    print(f'{p_bet+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요.')
+                    print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요. 현재 배팅 가능한 액수 {10000 - betting_cash[indexe][0]}원')
                     betting_cash[p_bet][0] = betting_cash[p_bet][0]-m_cash
                     m_cash = int(input("추가배팅할 금액 : "))
                     betting_cash[p_bet][0] = betting_cash[p_bet][0]+m_cash
                 raise1(m_cash, b_raise, player_count, indexe)
+                break
             else:
                 print("오타가 있는거 같습니다. 다시한번 확인해주세요.")
                 if betting_cash[p_bet][0] == 'Fold':
@@ -137,12 +143,14 @@ def betting1(player_count, player_index, indexe):
                 elif play_bet == "raise":
                     b_raise = int(input(f"얼마를 추가로 베팅하시겠습니까? | 현재 배팅금액 {betting_cash[0][0]} + "))
                     m_cash = m_cash + b_raise
+                    betting_cash[p_bet][0] = betting_cash[indexe][0]+m_cash
                     while betting_cash[p_bet][0] > cash[p_bet][0]:
-                        print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요.')
+                        print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요. 현재 배팅 가능한 액수 {10000 - betting_cash[indexe][0]}원')
                         betting_cash[p_bet][0] = betting_cash[p_bet][0]-m_cash
                         m_cash = int(input("추가배팅할 금액 : "))
                         betting_cash[p_bet][0] = betting_cash[p_bet][0]+m_cash
                     raise1(m_cash, b_raise, player_count, indexe)
+                    break
         if player_index == player_count:
             continue
         
@@ -173,7 +181,7 @@ def betting2(player_count, player_index, indexe):
         m_cash = int(input("추가배팅할 금액 : "))
         betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
         while betting_cash[indexe][0] > cash[indexe][0]:
-            print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요.')
+            print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요. 현재 배팅 가능한 액수 {10000 - betting_cash[indexe][0]}원')
             betting_cash[indexe][0] = betting_cash[indexe][0]-m_cash
             m_cash = int(input("추가배팅할 금액 : "))
             betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
@@ -196,11 +204,12 @@ def betting2(player_count, player_index, indexe):
                 b_raise = int(input(f"얼마를 추가로 베팅하시겠습니까? | 현재 배팅금액 {betting_cash[0][0]} + "))
                 m_cash = m_cash + b_raise
                 while betting_cash[indexe][0] > cash[indexe][0]:
-                    print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요.')
+                    print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요. 현재 배팅 가능한 액수 {10000 - betting_cash[indexe][0]}원')
                     betting_cash[indexe][0] = betting_cash[indexe][0]-m_cash
                     m_cash = int(input("추가배팅할 금액 : "))
                     betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
                 raise1(m_cash, b_raise, player_count, indexe)
+                break
             else:
                 print("오타가 있는거 같습니다. 다시한번 확인해주세요.")
                 if betting_cash[p_bet][0] == 'Fold':
@@ -221,11 +230,12 @@ def betting2(player_count, player_index, indexe):
                     b_raise = int(input(f"얼마를 추가로 베팅하시겠습니까? | 현재 배팅금액 {betting_cash[0][0]} + "))
                     m_cash = m_cash + b_raise
                     while betting_cash[indexe][0] > cash[indexe][0]:
-                        print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요.')
+                        print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요. 현재 배팅 가능한 액수 {10000 - betting_cash[indexe][0]}원')
                         betting_cash[indexe][0] = betting_cash[indexe][0]-m_cash
                         m_cash = int(input("추가배팅할 금액 : "))
                         betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
                     raise1(m_cash, b_raise, player_count, indexe)
+                    break
         indexe += 1
         if indexe > player_count:
             indexe = 0
@@ -272,11 +282,12 @@ def betting3(player_count, player_index, indexe):
                 b_raise = int(input(f"얼마를 추가로 베팅하시겠습니까? | 현재 배팅금액 {betting_cash[0][0]} + "))
                 m_cash = m_cash + b_raise
                 while betting_cash[indexe][0] > cash[indexe][0]:
-                    print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요.')
+                    print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요. 현재 배팅 가능한 액수 {10000 - betting_cash[indexe][0]}원')
                     betting_cash[indexe][0] = betting_cash[indexe][0]-m_cash
                     m_cash = int(input("추가배팅할 금액 : "))
                     betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
                 raise1(m_cash, b_raise, player_count, indexe)
+                break
             else:
                 print("오타가 있는거 같습니다. 다시한번 확인해주세요.")
                 if betting_cash[p_bet][0] == 'Fold':
@@ -297,11 +308,12 @@ def betting3(player_count, player_index, indexe):
                     b_raise = int(input(f"얼마를 추가로 베팅하시겠습니까? | 현재 배팅금액 {betting_cash[0][0]} + "))
                     m_cash = m_cash + b_raise
                     while betting_cash[indexe][0] > cash[indexe][0]:
-                        print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요.')
+                        print(f'{indexe+1}번째 플레이어의 배팅금액이 가진돈보다 많기때문에 베팅할수없습니다. 배팅금액을 다시 결정해주세요. 현재 배팅 가능한 액수 {10000 - betting_cash[indexe][0]}원')
                         betting_cash[indexe][0] = betting_cash[indexe][0]-m_cash
                         m_cash = int(input("추가배팅할 금액 : "))
                         betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
                     raise1(m_cash, b_raise, player_count, indexe)
+                    break
         if player_index == player_count:
             continue
 
