@@ -11,6 +11,23 @@ fold_player = []
 fold_player_index = []
 betting_cash = []
 global_card = []
+type_card_list = []
+spade = []
+diamond = []
+heart = []
+clover = []
+
+for i in card_type:
+    c_type = i
+    for z in (spade, diamond, heart, clover):
+        z.append(c_type + "A")
+        for k in range(2, 11):
+            z.append(c_type + " {0}".format(k))
+        for i in ["Q", "K"]:
+            z.append(c_type + " {0}".format(i))
+    type_card_list.append(z)
+
+
 for i in card_type:
     card_list.append(i + " A")
     for z in range(1,11):
