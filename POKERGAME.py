@@ -144,6 +144,84 @@ def player_pedigree(player_index, card_type_list):
     elif first_index == seconde_index:
         print("당신이 가진 족보 = One pair")
         
+def player_pedigree2(player_index, card_type_list):
+    for i in range(2):
+        player_card_type = p_c[player_index][i]
+        global1 = global_card[0]
+        global2 = global_card[1]
+        global3 = global_card[2]
+        p_t, trash = player_card_type.split(' ')
+        gfirst1, trash = global1.split(' ')
+        gfirst2, trash = global2.split(' ')
+        gfirst3, trash = global3.split(' ')
+        global_list = []
+        c_i = 0
+        for glob in (gfirst1, gfirst2, gfirst3):
+            if glob == 'spade':
+                gfirst = 's ' + str(card_type_list[0].index(global_card[c_i]))
+            elif glob == 'diamond':
+                gfirst = 'd ' + str(card_type_list[1].index(global_card[c_i]))
+            elif glob == 'heart':
+                gfirst = 'h ' + str(card_type_list[2].index(global_card[c_i]))
+            else:
+                gfirst = 'c ' + str(card_type_list[3].index(global_card[c_i]))
+            c_i += 1
+            global_list.append(gfirst)
+                    
+        if p_t == 'spade':
+            if i == 0:
+                first = 's ' + str(card_type_list[0].index(player_card_type))
+            else:
+                seconde = 's ' + str(card_type_list[0].index(player_card_type))
+        elif p_t == 'diamond':
+            if i == 0:
+                first = 'd ' + str(card_type_list[1].index(player_card_type))
+            else:
+                seconde = 'd ' + str(card_type_list[1].index(player_card_type))
+        elif p_t == 'heart':
+            if i == 0:
+                first = 'h ' + str(card_type_list[2].index(player_card_type))
+            else:
+                seconde = 'h ' + str(card_type_list[2].index(player_card_type))
+        else:
+            if i == 0:
+                first = 'c ' + str(card_type_list[3].index(player_card_type))
+            else:
+                seconde = 'c ' + str(card_type_list[3].index(player_card_type))
+    first_pattern, first_index = first.split(" ")
+    seconde_pattern, seconde_index = seconde.split(" ")
+    gf1_pattern, gf1_index = global_list[0].split(" ")
+    gf2_pattern, gf2_index = global_list[1].split(" ")
+    gf3_pattern, gf3_index = global_list[2].split(" ")
+    int(first_index)
+    int(seconde_index)
+    int(gf1_index)
+    int(gf2_index)
+    int(gf3_index)
+    pattern_pack = [first_pattern, seconde_pattern, gf1_pattern, gf2_pattern, gf3_pattern]
+    index_pack = [first_index, seconde_index, gf1_index, gf2_index, gf3_index]
+    index_pack.sort()
+    if first_pattern == seconde_pattern == gf1_pattern == gf2_pattern == gf3_pattern and index_pack[0] == 0 and index_pack[1] == 11 and index_pack[2] == 12 and index_pack[3] == 13 and index_pack[4] == 14:
+        print("당신이 가진 족보 = Royal Straight Flush")
+    elif first_pattern == seconde_pattern == gf1_pattern == gf2_pattern == gf3_pattern and index_pack[0] + 1 == index_pack[1] and index_pack[1] + 1 == index_pack[2] and index_pack[2] + 1 == index_pack[3] and index_pack[3] +1 == index_pack [4]:
+        print("당신이 가진 족보 = Straight Flush")
+    elif index_pack[0] == index_pack[1] == index_pack[2] == index_pack[3] or index_pack[1] == index_pack[2] == index_pack[3] == index_pack[4]:
+        print("당신이 가진 족보 = Four of a kind")    
+    elif index_pack[0] == index_pack[1] == index_pack[2] and index_pack[3] == index_pack[4] or index_pack[0] == index_pack[1] and index_pack[2] == index_pack[3] == index_pack[4]:
+        print("당신이 가진 족보 = Full house") 
+    elif pattern_pack[0] == pattern_pack[1] == pattern_pack[2] == pattern_pack[3] == pattern_pack[4]:
+        print("당신이 가진 족보 = Full house")
+    elif index_pack[0] + 1 == index_pack[1] and index_pack[1] + 1 == index_pack[2] and index_pack[2] + 1 == index_pack[3] and index_pack[3] +1 == index_pack[4]:
+        print("당신이 가진 족보 = Straight")
+    elif index_pack[1] == index_pack[2] == index_pack[0] or index_pack[1] == index_pack[2] == index_pack[3] or index_pack[2] == index_pack[3] == index_pack[4]:
+        print("당신이 가진 족보 = Three of a kind")
+    elif index_pack[0] == index_pack[1] and index_pack[2] == index_pack[3] or index_pack[0] == index_pack[1] and index_pack[3] == index_pack[4] or index_pack[1] == index_pack[2] and index_pack[3] == index_pack[4]:
+        print("당신이 가진 족보 = Two pair")
+    elif index_pack[0] == index_pack[1] or index_pack[1] == index_pack[2] or index_pack[2] == index_pack[3] or index_pack[3] == index_pack[4]:
+        print("당신이 가진 족보 = One pair")
+    else:
+        print("당신이 가진 족보 = High card")
+        
 def betting1(player_count, player_index, indexe):
     for i in range(1):
         print(f"{indexe+1}번째 플레이어는 베팅금액을 결정해주십시오. 현재 가진돈 {cash[indexe][0]}")
@@ -159,6 +237,11 @@ def betting1(player_count, player_index, indexe):
                 continue
             if indexe == p_bet:
                 continue
+            play_bet = input(f"""{p_bet + 1}번째 플레이어님 본인의 카드를 확인하시겠습니까?
+카드 확인하기 = check 아니라면 = Enter
+영어로 작성해 주십시오 : """)
+            if play_bet == 'check':
+                player_pedigree(indexe, type_card_list)
             play_bet = input(f"""{p_bet + 1}번째 플레이어님 콜하시겠습니까? 레이즈하시겠습니까? 폴드하겠습니까?
                 
 콜 = call 레이즈 = raise 폴드 = fold
@@ -246,6 +329,11 @@ def betting2(player_count, player_index, indexe):
                 continue
             if indexe == p_bet:
                 continue
+            play_bet = input(f"""{p_bet + 1}번째 플레이어님 본인의 카드를 확인하시겠습니까?
+카드 확인하기 = check 아니라면 = Enter
+영어로 작성해 주십시오 : """)
+            if play_bet == 'check':
+                player_pedigree2(indexe, type_card_list)
             play_bet = input(f"""{p_bet + 1}번째 플레이어님 콜하시겠습니까? 레이즈하시겠습니까? 폴드하겠습니까?
                 
 콜 = call 레이즈 = raise 폴드 = fold
@@ -384,6 +472,7 @@ def main():
         betting_cash.append([0])
     time.sleep(1)
     Dealing(player_count)
+    player_pedigree2(0, type_card_list)
     print("게임은 텍사스 홀덤규칙으로 진행됩니다. 플레이어 분들은 자신의 카드를 확인해 주세요.")
     for i in range(player_count):
         trash = input(f"{i+1}번째 플레이어님 자신의 카드를 확인해 주세요.")
