@@ -16,24 +16,31 @@ spade = []
 diamond = []
 heart = []
 clover = []
-
-for i in card_type:
-    c_type = i
-    for z in (spade, diamond, heart, clover):
-        z.append(c_type + "A")
-        for k in range(2, 11):
-            z.append(c_type + " {0}".format(k))
-        for i in ["Q", "K"]:
-            z.append(c_type + " {0}".format(i))
+type_index = 0
+for z in (spade, diamond, heart, clover):
+    z.append(card_type[type_index] + " A")
+    for k in range(2, 11):
+        z.append(card_type[type_index] + " {0}".format(k))
+    for i in ["Q", "K", "J"]:
+        z.append(card_type[type_index] + " {0}".format(i))
     type_card_list.append(z)
+    type_index +=1
+
 
 
 for i in card_type:
     card_list.append(i + " A")
-    for z in range(1,11):
+    for z in range(2,11):
         card_list.append("{0} {1}".format(i, z))
     for z in ("Q", "K", "J"):
         card_list.append("{0} {1}".format(i, z))
+
+
+
+        
+    
+    
+
 
 def raise1(m_cash, b_raise, player_count,indexe):
     for bet in range(player_count):
@@ -104,7 +111,39 @@ def Dealing(player_count):
     for i in range(player_count):
         p_c.append([shuffle_card.pop(0), shuffle_card.pop(0+player_count)])
     for i in range(4):
-        global_card.append(shuffle_card.pop(0)) 
+        global_card.append(shuffle_card.pop(0))
+        
+def player_pedigree(player_index, card_type_list):
+    for i in range(2):
+        player_card_type = p_c[player_index][i]
+        p_t, trash = player_card_type.split(' ')
+        if p_t == 'spade':
+            if i == 0:
+                first = 's ' + str(card_type_list[0].index(player_card_type))
+            else:
+                seconde = 's ' + str(card_type_list[0].index(player_card_type))
+        elif p_t == 'diamond':
+            if i == 0:
+                first = 'd ' + str(card_type_list[1].index(player_card_type))
+            else:
+                seconde = 'd ' + str(card_type_list[1].index(player_card_type))
+        elif p_t == 'heart':
+            if i == 0:
+                first = 'h ' + str(card_type_list[2].index(player_card_type))
+            else:
+                seconde = 'h ' + str(card_type_list[2].index(player_card_type))
+        else:
+            if i == 0:
+                first = 'c ' + str(card_type_list[3].index(player_card_type))
+            else:
+                seconde = 'c ' + str(card_type_list[3].index(player_card_type))
+    first_pattern, first_index = first.split(" ")
+    seconde_pattern, seconde_index = seconde.split(" ")
+    if first_pattern != seconde_pattern and first_index != seconde_index or first_pattern == seconde_pattern and first_index != seconde_index:
+        print("당신이 가진 족보 = High card")
+    elif first_index == seconde_index:
+        print("당신이 가진 족보 = One pair")
+        
 def betting1(player_count, player_index, indexe):
     for i in range(1):
         print(f"{indexe+1}번째 플레이어는 베팅금액을 결정해주십시오. 현재 가진돈 {cash[indexe][0]}")
@@ -351,7 +390,8 @@ def main():
         if trash == "break":
             break
         else:
-            print(p_c[i-1][0], p_c[i-1][1])
+            print(p_c[i][0], p_c[i][1])
+            player_pedigree(i, type_card_list)
         trash = input("카드를 확인하셨다면 Enter을 눌러주세요")
         for i in range(5000):
             print(".")
@@ -363,6 +403,5 @@ def main():
         player_index == 0
 
     
-        
     
 main()
