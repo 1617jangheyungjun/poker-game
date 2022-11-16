@@ -1,3 +1,2 @@
-list1 = ['awd', 'hdlkn', 'dwlkn', 'bwjdnbaskdb', 'd']
-list1.sort()
-print(list1)
+ds = [1,2,3,4]
+print(len(ds))
