@@ -177,10 +177,10 @@ def player_pedigree(player_index, card_type_list):
                 seconde = 'c ' + str(card_type_list[3].index(player_card_type))
     first_pattern, first_index = first.split(" ")
     seconde_pattern, seconde_index = seconde.split(" ")
-    if first_pattern != seconde_pattern and first_index != seconde_index or first_pattern == seconde_pattern and first_index != seconde_index:
-        print("당신이 가진 족보 = High card")
-    elif first_index == seconde_index:
+    if first_index == seconde:
         print("당신이 가진 족보 = One pair")
+    else:
+        print("당신이 가진 족보 = High card")
         
 def player_pedigree2(player_index, card_type_list):
     print(f"""당신의 카드 {p_c[player_index][0]}, {p_c[player_index][1]}
@@ -357,15 +357,45 @@ def player_pedigree3(player_index, card_type_list):
             print("당신이 가진 족보 = Royal Straight Flush")
         elif sindex_pattern[0] + 1 == sindex_pattern[1] and sindex_pattern[1] + 1 == sindex_pattern[2] and sindex_pattern[2] + 1 == sindex_pattern[3] and sindex_pattern[3] +1 == sindex_pattern[4]:
             print("당신이 가진 족보 = Straight Flush")
-        
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+            print("당신이 가진 족보 = Four of a kind")
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5]:
+            print("당신이 가진 족보 == Full house")
+        elif len(spattern_packed) == 5:
+            print('당신이 가진 족보 == Flush')
+        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]:
+            print('당신이 가진 족보 = Straight')
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 = Three of a kind')
+        elif sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[2] == sort_index_pack[3] and sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 == Two pair')
+        elif sort_index_pack[0] == sort_index_pack[1] or sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 = One pair')
+        else:
+            print('당신이 가진 족보 = High card')
     
-    if len(dpattern_packed) == 5:
+    elif len(dpattern_packed) == 5:
         dindex_pattern.sort()
         if dindex_pattern[0] == 0 and dindex_pattern[1] == 11 and dindex_pattern[2] == 12 and dindex_pattern[3] == 13 and dindex_pattern == 14:
             print("당신이 가진 족보 = Royal Straight Flush")
         elif dindex_pattern[0] + 1 == dindex_pattern[1] and dindex_pattern[1] + 1 == dindex_pattern[2] and dindex_pattern[2] + 1 == dindex_pattern[3] and dindex_pattern[3] +1 == dindex_pattern[4]:
             print("당신이 가진 족보 = Straight Flush")
-        
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+            print("당신이 가진 족보 = Four of a kind")
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5]:
+            print("당신이 가진 족보 == Full house")
+        elif len(dpattern_packed) == 5:
+            print('당신이 가진 족보 == Flush')
+        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]:
+            print('당신이 가진 족보 = Straight')
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 = Three of a kind')
+        elif sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[2] == sort_index_pack[3] and sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 == Two pair')
+        elif sort_index_pack[0] == sort_index_pack[1] or sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 = One pair')
+        else:
+            print('당신이 가진 족보 = High card')
     
     elif len(hpattern_packed) == 5:
         sindex_pattern.sort()
@@ -373,7 +403,22 @@ def player_pedigree3(player_index, card_type_list):
             print("당신이 가진 족보 = Royal Straight Flush")
         elif hindex_pattern[0] + 1 == hindex_pattern[1] and hindex_pattern[1] + 1 == hindex_pattern[2] and hindex_pattern[2] + 1 == hindex_pattern[3] and hindex_pattern[3] +1 == hindex_pattern[4]:
             print("당신이 가진 족보 = Straight Flush")
-        
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+            print("당신이 가진 족보 = Four of a kind")
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5]:
+            print("당신이 가진 족보 == Full house")
+        elif len(hpattern_packed) == 5:
+            print('당신이 가진 족보 == Flush')
+        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]:
+            print('당신이 가진 족보 = Straight')
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 = Three of a kind')
+        elif sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[2] == sort_index_pack[3] and sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 == Two pair')
+        elif sort_index_pack[0] == sort_index_pack[1] or sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 = One pair')
+        else:
+            print('당신이 가진 족보 = High card')
             
     elif len(cpattern_packed) == 5:
         sindex_pattern.sort()
@@ -381,7 +426,22 @@ def player_pedigree3(player_index, card_type_list):
             print("당신이 가진 족보 = Royal Straight Flush")
         elif cindex_pattern[0] + 1 == cindex_pattern[1] and cindex_pattern[1] + 1 == cindex_pattern[2] and cindex_pattern[2] + 1 == cindex_pattern[3] and cindex_pattern[3] +1 == cindex_pattern[4]:
             print("당신이 가진 족보 = Straight Flush")
-        
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+            print("당신이 가진 족보 = Four of a kind")
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5]:
+            print("당신이 가진 족보 == Full house")
+        elif len(cpattern_packed) == 5:
+            print('당신이 가진 족보 == Flush')
+        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]:
+            print('당신이 가진 족보 = Straight')
+        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 = Three of a kind')
+        elif sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[2] == sort_index_pack[3] and sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 == Two pair')
+        elif sort_index_pack[0] == sort_index_pack[1] or sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[4] == sort_index_pack[5]:
+            print('당신이 가진 족보 = One pair')
+        else:
+            print('당신이 가진 족보 = High card')
     else:
         if sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
             print("당신이 가진 족보 = Four of a kind")
