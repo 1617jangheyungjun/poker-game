@@ -263,7 +263,7 @@ def player_pedigree2(player_index, card_type_list):
         
 def player_pedigree3(player_index, card_type_list):
     print(f"""당신의 카드 {p_c[player_index][0]}, {p_c[player_index][1]}
-공통카드 {global_card[0]}, {global_card[1]}, {global_card[2]}""")
+공통카드 {global_card[0]}, {global_card[1]}, {global_card[2]} 마지막 카드 : {global_card[3]}""")
     time.sleep(1)
     for i in range(2):
         player_card_type = p_c[player_index][i]
@@ -328,7 +328,6 @@ def player_pedigree3(player_index, card_type_list):
     sort_index_pack = index_pack
     sort_pattern_pack.sort()
     sort_index_pack.sort()
-    print(index_pack)
     indexerer = 0
     spattern_packed = []
     sindex_pattern = []
@@ -358,7 +357,33 @@ def player_pedigree3(player_index, card_type_list):
             print("당신이 가진 족보 = Royal Straight Flush")
         elif sindex_pattern[0] + 1 == sindex_pattern[1] and sindex_pattern[1] + 1 == sindex_pattern[2] and sindex_pattern[2] + 1 == sindex_pattern[3] and sindex_pattern[3] +1 == sindex_pattern[4]:
             print("당신이 가진 족보 = Straight Flush")
-        elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+        
+    
+    if len(dpattern_packed) == 5:
+        dindex_pattern.sort()
+        if dindex_pattern[0] == 0 and dindex_pattern[1] == 11 and dindex_pattern[2] == 12 and dindex_pattern[3] == 13 and dindex_pattern == 14:
+            print("당신이 가진 족보 = Royal Straight Flush")
+        elif dindex_pattern[0] + 1 == dindex_pattern[1] and dindex_pattern[1] + 1 == dindex_pattern[2] and dindex_pattern[2] + 1 == dindex_pattern[3] and dindex_pattern[3] +1 == dindex_pattern[4]:
+            print("당신이 가진 족보 = Straight Flush")
+        
+    
+    elif len(hpattern_packed) == 5:
+        sindex_pattern.sort()
+        if hindex_pattern[0] == 0 and hindex_pattern[1] == 11 and hindex_pattern[2] == 12 and hindex_pattern[3] == 13 and hindex_pattern == 14:
+            print("당신이 가진 족보 = Royal Straight Flush")
+        elif hindex_pattern[0] + 1 == hindex_pattern[1] and hindex_pattern[1] + 1 == hindex_pattern[2] and hindex_pattern[2] + 1 == hindex_pattern[3] and hindex_pattern[3] +1 == hindex_pattern[4]:
+            print("당신이 가진 족보 = Straight Flush")
+        
+            
+    elif len(cpattern_packed) == 5:
+        sindex_pattern.sort()
+        if cindex_pattern[0] == 0 and cindex_pattern[1] == 11 and cindex_pattern[2] == 12 and cindex_pattern[3] == 13 and cindex_pattern == 14:
+            print("당신이 가진 족보 = Royal Straight Flush")
+        elif cindex_pattern[0] + 1 == cindex_pattern[1] and cindex_pattern[1] + 1 == cindex_pattern[2] and cindex_pattern[2] + 1 == cindex_pattern[3] and cindex_pattern[3] +1 == cindex_pattern[4]:
+            print("당신이 가진 족보 = Straight Flush")
+        
+    else:
+        if sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
             print("당신이 가진 족보 = Four of a kind")
         elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5]:
             print("당신이 가진 족보 == Full house")
@@ -374,7 +399,6 @@ def player_pedigree3(player_index, card_type_list):
             print('당신이 가진 족보 = One pair')
         else:
             print('당신이 가진 족보 = High card')
-
         
 def betting1(player_count, player_index, indexe):
     for i in range(1):
@@ -569,6 +593,11 @@ def betting3(player_count, player_index, indexe):
         print(f"{indexe+1}번째 플레이어는 '추가'베팅금액을 결정해주십시오. 현재 가진돈 {cash[indexe][0]}")
         for indexer in range(player_count):
             print(f"{indexer + 1}번째 플레이어의 돈 {cash[indexer][0]} | 배팅금액 : {betting_cash[indexer][0]}")
+        play_bet = input(f"""{indexe + 1}번째 플레이어님 본인의 카드를 확인하시겠습니까?
+카드 확인하기 = check 아니라면 = Enter
+영어로 작성해 주십시오 : """)
+        if play_bet == 'check':
+            player_pedigree3(indexe, type_card_list)
         m_cash = int(input("추가배팅할 금액 : "))
         betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
         for p_bet in range(player_count):
@@ -576,6 +605,11 @@ def betting3(player_count, player_index, indexe):
                 continue
             if indexe == p_bet:
                 continue
+            play_bet = input(f"""{indexe + 1}번째 플레이어님 본인의 카드를 확인하시겠습니까?
+카드 확인하기 = check 아니라면 = Enter
+영어로 작성해 주십시오 : """)
+            if play_bet == 'check':
+                player_pedigree3(p_bet, type_card_list)
             play_bet = input(f"""{p_bet + 1}번째 플레이어님 콜하시겠습니까? 레이즈하시겠습니까? 폴드하겠습니까?
                 
 콜 = call 레이즈 = raise 폴드 = fold
