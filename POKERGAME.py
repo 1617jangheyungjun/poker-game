@@ -17,6 +17,8 @@ diamond = []
 heart = []
 clover = []
 type_index = 0
+start = 0
+
 for z in (spade, diamond, heart, clover):
     z.append(card_type[type_index] + " A")
     for k in range(2, 11):
@@ -35,14 +37,73 @@ for i in card_type:
     for z in ("Q", "K", "J"):
         card_list.append("{0} {1}".format(i, z))
 
+def starte():
+    #포커카드 리스트 스,다,하,클 순서
+    card_type = ["spade", "diamond", "heart", "clover"]
+    card_list = []
+    type_index = 0
+    player_card = []
+    p_c = []
+    fold_player = []
+    fold_player_index = []
+    global_card = []
+    type_card_list = []
+    spade = []
+    diamond = []
+    heart = []
+    clover = []
+    type_index = 0
+    start = 0
+
+    for z in (spade, diamond, heart, clover):
+        z.append(card_type[type_index] + " A")
+        for k in range(2, 11):
+            z.append(card_type[type_index] + " {0}".format(k))
+        for i in ["Q", "K", "J"]:
+            z.append(card_type[type_index] + " {0}".format(i))
+        type_card_list.append(z)
+        type_index +=1
+
+
+
+    for i in card_type:
+        card_list.append(i + " A")
+        for z in range(2,11):
+            card_list.append("{0} {1}".format(i, z))
+        for z in ("Q", "K", "J"):
+            card_list.append("{0} {1}".format(i, z))
 
 
         
     
+def win(player_count):
+    winner = []
+    for i in range(player_count):
+        x = player_pedigree31(i, type_card_list)
+        winner.append(x)
+    winner_sort = winner
+    winner.sort()
+    winner_sort_man = winner_sort[-1]
+    print(f"{winner.index(winner_sort_man) + 1}번째 플레이어님 축하합니다 승리하셨습니다.")
+    append_cash = 0
+    for i in betting_cash:
+        if i[0] == 'Fold':
+            continue
+        else:
+            append_cash += i[0]
+            x = i[0]
+    for i in range(player_count):
+        cash[i][0] = cash[i][0] - x
+
+    cash[winner.index(winner_sort_man)][0] += append_cash
     
+    for i in range(player_count):
+        betting_cash[i].insert(0, 0)
+        int(cash[i][0])    
 
 
-def raise1(m_cash, b_raise, player_count,indexe):
+    main(1, player_count)
+def raise1(m_cash, b_raise, player_count,indexe, pedigree):
     for bet in range(player_count):
         
         if betting_cash[bet][0] == 'Fold':
@@ -53,7 +114,12 @@ def raise1(m_cash, b_raise, player_count,indexe):
 카드 확인하기 = check 아니라면 = Enter
 영어로 작성해 주십시오 : """)
         if play_bet == 'check':
-            player_pedigree2(indexe, type_card_list)
+            if pedigree == 1:
+                player_pedigree(p_bet, type_card_list)
+            elif pedigree == 2:
+                player_pedigree2(p_bet, type_card_list)
+            elif pedigree == 3:
+                player_pedigree3(p_bet, type_card_list)
         if betting_cash[p_bet][0] == 'Fold':
                 print(f"""{p_bet+1}번째 플레이어는 Fold이기때문에 배팅에 참가할 수 없습니다.
 """)
@@ -79,7 +145,7 @@ def raise1(m_cash, b_raise, player_count,indexe):
                 betting_cash[p_bet][0] = betting_cash[p_bet][0]-m_cash
                 m_cash = int(input("추가배팅할 금액 : "))
                 betting_cash[p_bet][0] = betting_cash[indexe][0]+m_cash
-            raise1(m_cash, b_raise, player_count)
+            raise1(m_cash, b_raise, player_count, pedigree)
             break
         else:
                 print("오타가 있는거 같습니다. 다시한번 확인해주세요.")
@@ -106,7 +172,7 @@ def raise1(m_cash, b_raise, player_count,indexe):
                         betting_cash[p_bet][0] = betting_cash[p_bet][0]-m_cash
                         m_cash = int(input("추가배팅할 금액 : "))
                         betting_cash[p_bet][0] = betting_cash[p_bet][0]+m_cash
-                    raise1(m_cash, b_raise, player_count)
+                    raise1(m_cash, b_raise, player_count, pedigree)
                     break
         
     
@@ -328,6 +394,8 @@ def player_pedigree3(player_index, card_type_list):
     sort_index_pack = index_pack
     sort_pattern_pack.sort()
     sort_index_pack.sort()
+    set_sort_index_pack = sort_index_pack
+    set(set_sort_index_pack)
     indexerer = 0
     spattern_packed = []
     sindex_pattern = []
@@ -363,7 +431,7 @@ def player_pedigree3(player_index, card_type_list):
             print("당신이 가진 족보 == Full house")
         elif len(spattern_packed) == 5:
             print('당신이 가진 족보 == Flush')
-        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]:
+        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5] or set_sort_index_pack[0] + 1 == set_sort_index_pack[1] and set_sort_index_pack[1]+1 == set_sort_index_pack[2] and set_sort_index_pack[2]+1 == set_sort_index_pack[3] and set_sort_index_pack[3]+1 == set_sort_index_pack[4]:
             print('당신이 가진 족보 = Straight')
         elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
             print('당신이 가진 족보 = Three of a kind')
@@ -386,7 +454,7 @@ def player_pedigree3(player_index, card_type_list):
             print("당신이 가진 족보 == Full house")
         elif len(dpattern_packed) == 5:
             print('당신이 가진 족보 == Flush')
-        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]:
+        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5] or set_sort_index_pack[0] + 1 == set_sort_index_pack[1] and set_sort_index_pack[1]+1 == set_sort_index_pack[2] and set_sort_index_pack[2]+1 == set_sort_index_pack[3] and set_sort_index_pack[3]+1 == set_sort_index_pack[4]:
             print('당신이 가진 족보 = Straight')
         elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
             print('당신이 가진 족보 = Three of a kind')
@@ -409,7 +477,7 @@ def player_pedigree3(player_index, card_type_list):
             print("당신이 가진 족보 == Full house")
         elif len(hpattern_packed) == 5:
             print('당신이 가진 족보 == Flush')
-        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]:
+        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]or set_sort_index_pack[0] + 1 == set_sort_index_pack[1] and set_sort_index_pack[1]+1 == set_sort_index_pack[2] and set_sort_index_pack[2]+1 == set_sort_index_pack[3] and set_sort_index_pack[3]+1 == set_sort_index_pack[4]:
             print('당신이 가진 족보 = Straight')
         elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
             print('당신이 가진 족보 = Three of a kind')
@@ -432,7 +500,7 @@ def player_pedigree3(player_index, card_type_list):
             print("당신이 가진 족보 == Full house")
         elif len(cpattern_packed) == 5:
             print('당신이 가진 족보 == Flush')
-        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]:
+        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]or set_sort_index_pack[0] + 1 == set_sort_index_pack[1] and set_sort_index_pack[1]+1 == set_sort_index_pack[2] and set_sort_index_pack[2]+1 == set_sort_index_pack[3] and set_sort_index_pack[3]+1 == set_sort_index_pack[4]:
             print('당신이 가진 족보 = Straight')
         elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
             print('당신이 가진 족보 = Three of a kind')
@@ -449,7 +517,7 @@ def player_pedigree3(player_index, card_type_list):
             print("당신이 가진 족보 == Full house")
         elif len(spattern_packed) == 5:
             print('당신이 가진 족보 == Flush')
-        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]:
+        elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]or set_sort_index_pack[0] + 1 == set_sort_index_pack[1] and set_sort_index_pack[1]+1 == set_sort_index_pack[2] and set_sort_index_pack[2]+1 == set_sort_index_pack[3] and set_sort_index_pack[3]+1 == set_sort_index_pack[4]:
             print('당신이 가진 족보 = Straight')
         elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
             print('당신이 가진 족보 = Three of a kind')
@@ -460,6 +528,210 @@ def player_pedigree3(player_index, card_type_list):
         else:
             print('당신이 가진 족보 = High card')
         
+def player_pedigree31(player_index, card_type_list):
+    print(f"""{player_index + 1}번째 플레이어 카드 {p_c[player_index][0]}, {p_c[player_index][1]}
+공통카드 {global_card[0]}, {global_card[1]}, {global_card[2]} 마지막 카드 : {global_card[3]}""")
+    time.sleep(1)
+    if betting_cash[player_index][0] == 'Fold':
+        return 0
+    else:
+        for i in range(2):
+            player_card_type = p_c[player_index][i]
+            global1 = global_card[0]
+            global2 = global_card[1]
+            global3 = global_card[2]
+            global4 = global_card[3]
+            p_t, trash = player_card_type.split(' ')
+            gfirst1, trash = global1.split(' ')
+            gfirst2, trash = global2.split(' ')
+            gfirst3, trash = global3.split(' ')
+            gfirst4, trash = global4.split(' ')
+            global_list = []
+            c_i = 0
+            for glob in (gfirst1, gfirst2, gfirst3, gfirst4):
+                if glob == 'spade':
+                    gfirst = 's ' + str(card_type_list[0].index(global_card[c_i]))
+                elif glob == 'diamond':
+                    gfirst = 'd ' + str(card_type_list[1].index(global_card[c_i]))
+                elif glob == 'heart':
+                    gfirst = 'h ' + str(card_type_list[2].index(global_card[c_i]))
+                else:
+                    gfirst = 'c ' + str(card_type_list[3].index(global_card[c_i]))
+                c_i += 1
+                global_list.append(gfirst)
+                        
+            if p_t == 'spade':
+                if i == 0:
+                    first = 's ' + str(card_type_list[0].index(player_card_type))
+                else:
+                    seconde = 's ' + str(card_type_list[0].index(player_card_type))
+            elif p_t == 'diamond':
+                if i == 0:
+                    first = 'd ' + str(card_type_list[1].index(player_card_type))
+                else:
+                    seconde = 'd ' + str(card_type_list[1].index(player_card_type))
+            elif p_t == 'heart':
+                if i == 0:
+                    first = 'h ' + str(card_type_list[2].index(player_card_type))
+                else:
+                    seconde = 'h ' + str(card_type_list[2].index(player_card_type))
+            else:
+                if i == 0:
+                    first = 'c ' + str(card_type_list[3].index(player_card_type))
+                else:
+                    seconde = 'c ' + str(card_type_list[3].index(player_card_type))
+        first_pattern, first_index = first.split(" ")
+        seconde_pattern, seconde_index = seconde.split(" ")
+        gf1_pattern, gf1_index = global_list[0].split(" ")
+        gf2_pattern, gf2_index = global_list[1].split(" ")
+        gf3_pattern, gf3_index = global_list[2].split(" ")
+        gf4_pattern, gf4_index = global_list[3].split(" ")
+        first_index = int(first_index)
+        seconde_index = int(seconde_index)
+        gf1_index = int(gf1_index)
+        gf2_index = int(gf2_index)
+        gf3_index = int(gf3_index)
+        gf4_index = int(gf4_index)
+        pattern_pack = [first_pattern, seconde_pattern, gf1_pattern, gf2_pattern, gf3_pattern, gf4_pattern]
+        index_pack = [first_index, seconde_index, gf1_index, gf2_index, gf3_index, gf4_index]
+        sort_pattern_pack = pattern_pack
+        sort_index_pack = index_pack
+        sort_pattern_pack.sort()
+        sort_index_pack.sort()
+        set_sort_index_pack = sort_index_pack
+        set(set_sort_index_pack)
+        indexerer = 0
+        spattern_packed = []
+        sindex_pattern = []
+        dpattern_packed = []
+        dindex_pattern = []
+        hpattern_packed = []
+        hindex_pattern = []
+        cpattern_packed = []
+        cindex_pattern = []
+        for check in pattern_pack:
+            if check == 's':
+                spattern_packed.append(check)
+                sindex_pattern.append(index_pack[indexerer])
+            if check == 'd':
+                dpattern_packed.append(check)
+                dindex_pattern.append(index_pack[indexerer])
+            if check == 'h':
+                hpattern_packed.append(check)
+                hindex_pattern.append(index_pack[indexerer])
+            if check == 'c':
+                cpattern_packed.append(check)
+                cindex_pattern.append(index_pack[indexerer])
+            indexerer += 1
+        if len(spattern_packed) == 5:
+            sindex_pattern.sort()
+            if sindex_pattern[0] == 0 and sindex_pattern[1] == 11 and sindex_pattern[2] == 12 and sindex_pattern[3] == 13 and sindex_pattern == 14:
+                x = 10
+            elif sindex_pattern[0] + 1 == sindex_pattern[1] and sindex_pattern[1] + 1 == sindex_pattern[2] and sindex_pattern[2] + 1 == sindex_pattern[3] and sindex_pattern[3] +1 == sindex_pattern[4]:
+                x = 9
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+                x = 8
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5]:
+                x = 7
+            elif len(spattern_packed) == 5:
+                x = 6
+            elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5] or set_sort_index_pack[0] + 1 == set_sort_index_pack[1] and set_sort_index_pack[1]+1 == set_sort_index_pack[2] and set_sort_index_pack[2]+1 == set_sort_index_pack[3] and set_sort_index_pack[3]+1 == set_sort_index_pack[4]:
+                x = 5
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+                x = 4
+            elif sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[2] == sort_index_pack[3] and sort_index_pack[4] == sort_index_pack[5]:
+                x = 3
+            elif sort_index_pack[0] == sort_index_pack[1] or sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[4] == sort_index_pack[5]:
+                x = 2
+            else:
+                x = 1
+        
+        elif len(dpattern_packed) == 5:
+            dindex_pattern.sort()
+            if dindex_pattern[0] == 0 and dindex_pattern[1] == 11 and dindex_pattern[2] == 12 and dindex_pattern[3] == 13 and dindex_pattern == 14:
+                x = 10
+            elif dindex_pattern[0] + 1 == dindex_pattern[1] and dindex_pattern[1] + 1 == dindex_pattern[2] and dindex_pattern[2] + 1 == dindex_pattern[3] and dindex_pattern[3] +1 == dindex_pattern[4]:
+                x = 9
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+                x = 8
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5]:
+                x = 7
+            elif len(dpattern_packed) == 5:
+                x = 6
+            elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]or set_sort_index_pack[0] + 1 == set_sort_index_pack[1] and set_sort_index_pack[1]+1 == set_sort_index_pack[2] and set_sort_index_pack[2]+1 == set_sort_index_pack[3] and set_sort_index_pack[3]+1 == set_sort_index_pack[4]:
+                x = 5
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+                x = 4
+            elif sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[2] == sort_index_pack[3] and sort_index_pack[4] == sort_index_pack[5]:
+                x = 3
+            elif sort_index_pack[0] == sort_index_pack[1] or sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[4] == sort_index_pack[5]:
+                x = 2
+            else:
+                x = 1
+        
+        elif len(hpattern_packed) == 5:
+            sindex_pattern.sort()
+            if hindex_pattern[0] == 0 and hindex_pattern[1] == 11 and hindex_pattern[2] == 12 and hindex_pattern[3] == 13 and hindex_pattern == 14:
+                x = 10
+            elif hindex_pattern[0] + 1 == hindex_pattern[1] and hindex_pattern[1] + 1 == hindex_pattern[2] and hindex_pattern[2] + 1 == hindex_pattern[3] and hindex_pattern[3] +1 == hindex_pattern[4]:
+                x = 9
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+                x = 8
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5]:
+                x = 7
+            elif len(hpattern_packed) == 5:
+                x = 6
+            elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]or set_sort_index_pack[0] + 1 == set_sort_index_pack[1] and set_sort_index_pack[1]+1 == set_sort_index_pack[2] and set_sort_index_pack[2]+1 == set_sort_index_pack[3] and set_sort_index_pack[3]+1 == set_sort_index_pack[4]:
+                x = 5
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+                x = 4
+            elif sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[2] == sort_index_pack[3] and sort_index_pack[4] == sort_index_pack[5]:
+                x = 3
+            elif sort_index_pack[0] == sort_index_pack[1] or sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[4] == sort_index_pack[5]:
+                x = 2
+            else:
+                x = 1
+                
+        elif len(cpattern_packed) == 5:
+            sindex_pattern.sort()
+            if cindex_pattern[0] == 0 and cindex_pattern[1] == 11 and cindex_pattern[2] == 12 and cindex_pattern[3] == 13 and cindex_pattern == 14:
+                x = 10
+            elif cindex_pattern[0] + 1 == cindex_pattern[1] and cindex_pattern[1] + 1 == cindex_pattern[2] and cindex_pattern[2] + 1 == cindex_pattern[3] and cindex_pattern[3] +1 == cindex_pattern[4]:
+                x = 9
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+                x = 8
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5]:
+                x = 7
+            elif len(cpattern_packed) == 5:
+                x = 6
+            elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]or set_sort_index_pack[0] + 1 == set_sort_index_pack[1] and set_sort_index_pack[1]+1 == set_sort_index_pack[2] and set_sort_index_pack[2]+1 == set_sort_index_pack[3] and set_sort_index_pack[3]+1 == set_sort_index_pack[4]:
+                x = 5
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+                x = 4
+            elif sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[2] == sort_index_pack[3] and sort_index_pack[4] == sort_index_pack[5]:
+                x = 3
+            elif sort_index_pack[0] == sort_index_pack[1] or sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[4] == sort_index_pack[5]:
+                x = 2
+            else:
+                x = 1
+        else:
+            if sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+                x = 8
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5]:
+                x = 7
+            elif len(spattern_packed) == 5:
+                x = 6
+            elif sort_index_pack[0] + 1 == sort_index_pack[1] and sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] +1 == sort_index_pack[4] or sort_index_pack[1] + 1 == sort_index_pack[2] and sort_index_pack[2] + 1 == sort_index_pack[3] and sort_index_pack[3] + 1 == sort_index_pack[4] and sort_index_pack[4] +1 == sort_index_pack[5]or set_sort_index_pack[0] + 1 == set_sort_index_pack[1] and set_sort_index_pack[1]+1 == set_sort_index_pack[2] and set_sort_index_pack[2]+1 == set_sort_index_pack[3] and set_sort_index_pack[3]+1 == set_sort_index_pack[4]:
+                x = 5
+            elif sort_index_pack[0] == sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[1] == sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] == sort_index_pack[5]:
+                x = 4
+            elif sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[0] == sort_index_pack[1] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[1] == sort_index_pack[2] and sort_index_pack[4] == sort_index_pack[5] or sort_index_pack[2] == sort_index_pack[3] and sort_index_pack[4] == sort_index_pack[5]:
+                x = 3
+            elif sort_index_pack[0] == sort_index_pack[1] or sort_index_pack[1] == sort_index_pack[2] or sort_index_pack[2] == sort_index_pack[3] or sort_index_pack[3] == sort_index_pack[4] or sort_index_pack[4] == sort_index_pack[5]:
+                x = 2
+            else:
+                x = 1
+        return x
 def betting1(player_count, player_index, indexe):
     for i in range(1):
         print(f"{indexe+1}번째 플레이어는 베팅금액을 결정해주십시오. 현재 가진돈 {cash[indexe][0]}")
@@ -504,7 +776,7 @@ def betting1(player_count, player_index, indexe):
                     betting_cash[p_bet][0] = betting_cash[p_bet][0]-m_cash
                     m_cash = int(input("추가배팅할 금액 : "))
                     betting_cash[p_bet][0] = betting_cash[p_bet][0]+m_cash
-                raise1(m_cash, b_raise, player_count, indexe)
+                raise1(m_cash, b_raise, player_count, indexe, 1)
                 break
             else:
                 print("오타가 있는거 같습니다. 다시한번 확인해주세요.")
@@ -531,7 +803,7 @@ def betting1(player_count, player_index, indexe):
                         betting_cash[p_bet][0] = betting_cash[p_bet][0]-m_cash
                         m_cash = int(input("추가배팅할 금액 : "))
                         betting_cash[p_bet][0] = betting_cash[p_bet][0]+m_cash
-                    raise1(m_cash, b_raise, player_count, indexe)
+                    raise1(m_cash, b_raise, player_count, indexe, 1)
                     break
         if player_index == player_count:
             continue
@@ -600,7 +872,7 @@ def betting2(player_count, player_index, indexe):
                     betting_cash[indexe][0] = betting_cash[indexe][0]-m_cash
                     m_cash = int(input("추가배팅할 금액 : "))
                     betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
-                raise1(m_cash, b_raise, player_count, indexe)
+                raise1(m_cash, b_raise, player_count, indexe, 2)
                 break
             else:
                 print("오타가 있는거 같습니다. 다시한번 확인해주세요.")
@@ -626,10 +898,10 @@ def betting2(player_count, player_index, indexe):
                         betting_cash[indexe][0] = betting_cash[indexe][0]-m_cash
                         m_cash = int(input("추가배팅할 금액 : "))
                         betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
-                    raise1(m_cash, b_raise, player_count, indexe)
+                    raise1(m_cash, b_raise, player_count, indexe, 2)
                     break
         indexe += 1
-        if indexe > player_count:
+        if indexe >= player_count:
             indexe = 0
         betting3(player_count, player_index, indexe)
 
@@ -665,7 +937,7 @@ def betting3(player_count, player_index, indexe):
                 continue
             if indexe == p_bet:
                 continue
-            play_bet = input(f"""{indexe + 1}번째 플레이어님 본인의 카드를 확인하시겠습니까?
+            play_bet = input(f"""{p_bet + 1}번째 플레이어님 본인의 카드를 확인하시겠습니까?
 카드 확인하기 = check 아니라면 = Enter
 영어로 작성해 주십시오 : """)
             if play_bet == 'check':
@@ -688,7 +960,7 @@ def betting3(player_count, player_index, indexe):
                     betting_cash[indexe][0] = betting_cash[indexe][0]-m_cash
                     m_cash = int(input("추가배팅할 금액 : "))
                     betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
-                raise1(m_cash, b_raise, player_count, indexe)
+                raise1(m_cash, b_raise, player_count, indexe, 3)
                 break
             else:
                 print("오타가 있는거 같습니다. 다시한번 확인해주세요.")
@@ -714,21 +986,32 @@ def betting3(player_count, player_index, indexe):
                         betting_cash[indexe][0] = betting_cash[indexe][0]-m_cash
                         m_cash = int(input("추가배팅할 금액 : "))
                         betting_cash[indexe][0] = betting_cash[indexe][0]+m_cash
-                    raise1(m_cash, b_raise, player_count, indexe)
+                    raise1(m_cash, b_raise, player_count, indexe, 3)
                     break
+        win(player_count)
         if player_index == player_count:
             continue
 
 
-def main():
+
+
+
+def main(start, player_count):
+    starte()
+
     player_index = 0
-    player_count = int(input("플레이어의 수를 정해주세요 : "))
-    print("{0}명의 플레이어로 게임을 시작합니다.".format(player_count))
+    if start == 0:
+        player_count = int(input("플레이어의 수를 정해주세요 : "))
+        print("{0}명의 플레이어로 게임을 시작합니다.".format(player_count))
     print(f"{player_count}명의 플레이어에게 딜링을 하는중입니다.")
-    for i in range(player_count):
-        cash.append([10000])
-        betting_cash.append([0])
-    time.sleep(1)
+    if start == 0:
+        for i in range(player_count):
+            cash.append([10000])
+            betting_cash.append([0])
+        time.sleep(1)
+        start += 1
+    else:
+        pass
     Dealing(player_count)
     print("게임은 텍사스 홀덤규칙으로 진행됩니다. 플레이어 분들은 자신의 카드를 확인해 주세요.")
     for i in range(player_count):
@@ -746,8 +1029,8 @@ def main():
     
     player_index += 1
     if player_index > player_count:
-        player_index == 0
+        player_index == 0   
 
-    
-    
-main()
+
+
+main(start, 0)
